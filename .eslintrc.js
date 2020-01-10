@@ -3,10 +3,12 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ],
+  //烦得很，去掉eslint校验
+  // 'extends': [
+  //   //   'plugin:vue/essential',
+  //   //   '@vue/standard'
+  //   // ],
+  'extends': ["plugin:vue/essential"],
   rules: {
     'no-console': 'off',
     'no-debugger': 'off'
