@@ -23,6 +23,8 @@
     </div>
 
     <div class="bottom"></div>
+
+    <div class="navbar"></div>
   </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
     box-sizing: border-box;
     height: 160px;
     padding: 30px;
-    margin-top: 50px;
+    margin-top: 20px;
   }
 
   .head>div{
@@ -67,7 +69,7 @@ export default {
   }
 
   .head>div:last-child{
-    margin-top: 80px;
+    margin-top: 60px;
   }
 
   .head>div>div{
@@ -86,12 +88,12 @@ export default {
     box-sizing: border-box;
     width: 100%;
     height: 165px;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 0 10px;
   }
 
   .middle .phone{
-    margin-top: 80px;
+    margin-top: 60px;
   }
 
   .middle>div{
@@ -106,7 +108,7 @@ export default {
     margin-left: 20px;
   }
 
-  .bottom {
+  .navbar {
     position: fixed;
     left: 0;
     right: 0;
