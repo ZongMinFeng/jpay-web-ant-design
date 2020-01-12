@@ -20,6 +20,15 @@ Vue.use(MintUI)
 //总体样式
 import '../static/css/common.css'
 
+//axios
+import axios from 'axios';
+axios.defaults.timeout=10000;
+Vue.prototype.$axios=axios;
+
+//sendServer
+import sendServer from '@/util/communication.js';
+Vue.prototype.$sendServer=sendServer;
+
 new Vue({
   router,
   render: h => h(App)

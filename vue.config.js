@@ -3,6 +3,7 @@ module.exports = {
   // 打包app时放开该配置
   publicPath: './',
 
+  //fixable rem布局
   css: {
     loaderOptions: {
       postcss: {
@@ -15,5 +16,15 @@ module.exports = {
         ]
       }
     }
-  }
+  },
+
+  devServer:{
+    proxy:{
+      '/':{
+        target:'http://127.0.0.1:10086/',//本地
+        secure: false,
+        changeOrigin: true
+      }
+    }
+  },
 }

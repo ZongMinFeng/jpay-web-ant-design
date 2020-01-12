@@ -9,7 +9,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    redirect: '/business'
+    redirect: '/login'
   },
   {
     path: '/about',
