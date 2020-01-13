@@ -9,6 +9,7 @@ module.exports = {
   //   //   '@vue/standard'
   //   // ],
   'extends': ["plugin:vue/essential"],
+
   rules: {
     'no-console': 'off',
     'no-debugger': 'off'
