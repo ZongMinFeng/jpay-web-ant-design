@@ -29,7 +29,8 @@
 
     <div class="operate" v-show="showFlag===2">
       <mt-button type="primary" class="operate-button" @click="saleTap">消费</mt-button>
-      <mt-button type="primary" class="operate-button">充值</mt-button>
+      <mt-button type="primary" class="operate-button" @click="chargeTap">充值</mt-button>
+      <mt-button type="primary" class="operate-button" @click="returnTap">返回</mt-button>
     </div>
 
     <div>
@@ -50,7 +51,8 @@
             <span>{{item.amt}}</span>
           </div>
           <div class="div4">
-            <mt-button type="danger">退货</mt-button>
+            <mt-button v-if="item.txnName==='消费'&&item.refundStatus===0" type="danger" @click="refundTap(item)">退货</mt-button>
+            <span v-if="item.txnName==='消费'&&item.refundStatus===2">已经退货</span>
           </div>
         </li>
       </ul>
@@ -61,7 +63,7 @@
 </template>
 
 <script>
-  import { memberDetailsQueryByCon, voucherQuery, memberSale } from '@/tool/module.js'
+  import { memberDetailsQueryByCon, voucherQuery, memberSale, memberCharge, memberRefund} from '@/tool/module.js'
   import { MessageBox } from 'mint-ui';
   import {nextSeq} from '../../router/sequence'
 
@@ -86,6 +88,7 @@
         saleForm: {
           amt: null,
         },
+        chargeForm: {},
         username:null,
       }
     },
@@ -166,7 +169,7 @@
       },
 
       saleTap() {
-        MessageBox.prompt('请输入金额').then(({ value, action }) => {
+        MessageBox.prompt('请输入金额', '消费').then(({ value, action }) => {
           this.saleForm.amt=parseFloat(value);
           this.sale();
         });
@@ -191,6 +194,67 @@
             this.$message('消费失败');
           }
         ).catch();
+      },
+
+      chargeTap(){
+        MessageBox.prompt('请输入金额', '充值').then(({ value, action }) => {
+          this.chargeForm.amt=parseFloat(value);
+          this.charge();
+        });
+      },
+
+      charge(){
+        let params = {};
+        params.issuId = this.issuInstInfo.instId;
+        params.acqId = this.acqInstInfo.instId;
+        params.transId = nextSeq();
+        params.memId = this.memberInfo.memId;
+        params.amt = this.chargeForm.amt;
+        params.mch = this.instInfo.instId;
+        params.mchName = this.instInfo.instName;
+        params.createTellerId = this.username;
+        memberCharge(params).then(
+          (res) => {
+            this.$message('充值成功');
+            this.queryTap();
+          },
+          (res) => {
+            this.$message('充值失败');
+          }
+        ).catch();
+      },
+
+      refundTap(item){
+        this.$messageBox.confirm('此操作将全部退货', '退货').then(action=>{
+          this.refund(item);
+        });
+      },
+
+      refund(item){
+        let params = {};
+        params.issuId = this.issuInstInfo.instId;
+        params.acqId = this.acqInstInfo.instId;
+        params.voucher = nextSeq();
+        params.orgVoucher=item.voucher;
+        params.memId = this.memberInfo.memId;
+        params.refoundAmt = item.amt-item.refundAmt;
+        params.mid = this.instInfo.instId;
+        params.mchName = this.instInfo.instName;
+        params.createTellerId = this.username;
+        memberRefund(params).then(
+          (res) => {
+            this.$message('退货成功');
+            this.queryTap();
+          },
+          (res) => {
+            this.$message('退货失败');
+          }
+        ).catch();
+      },
+
+      returnTap(){
+        this.searchForm.phone=null;
+        this.showFlag=1;
       },
     }
   }
@@ -309,6 +373,10 @@
 
   .vouchers li .div4{
     flex: 4;
+  }
+
+  .vouchers li .div4 span{
+    color: red;
   }
 
   .vouchers li .div4 .mint-button{

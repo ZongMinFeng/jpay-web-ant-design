@@ -67,6 +67,65 @@ const memberDetailsQueryByCon = ( params) => {
 };
 
 /**
+ * 2.26	 会员充值
+ * @param me
+ * @param params
+ * @param Toast
+ * @returns {Promise<any>}
+ */
+const memberCharge = (params) => {
+  console.log("memberCharge", params);//debug
+  return new Promise((resolve, reject) => {
+    let urlParams = {};
+    let send = {};
+    let singArray = {};
+    urlParams.url = functions.memberCharge.url;
+
+    if(params.issuId!=null){
+      send.issuId=params.issuId;
+    }
+    if(params.acqId!=null){
+      send.acqId=params.acqId;
+    }
+    if(params.transId !=null){
+      send.transId =params.transId ;
+    }
+    if(params.memId!=null){
+      send.memId=params.memId;
+    }
+    if(params.amt!=null){
+      send.amt=params.amt;
+    }
+    if(params.mch!=null){
+      send.mch=params.mch;
+    }
+    if(params.mchName!=null){
+      send.mchName=params.mchName;
+    }
+    if(params.pos!=null){
+      send.pos=params.pos;
+    }
+    if(params.posName!=null){
+      send.posName=params.posName;
+    }
+    if(params.createTellerId!=null){
+      send.createTellerId=params.createTellerId;
+    }
+
+    urlParams.send = send;
+    urlParams.noSing = true;
+    urlParams.singArray = singArray;
+
+    sendServer(urlParams).then((res) => {
+        resolve(res)
+      }, (res) => {
+        reject(res)
+      }
+    );
+  })
+};
+
+/**
  * 2.27	 会员消费
  * @param params
  * @returns {Promise<any>}
@@ -102,6 +161,66 @@ const memberSale = (params) => {
     }
     if(params.pos!=null){
       send.pos=params.pos;
+    }
+    if(params.posName!=null){
+      send.posName=params.posName;
+    }
+    if(params.createTellerId!=null){
+      send.createTellerId=params.createTellerId;
+    }
+
+    urlParams.send = send;
+    urlParams.noSing = true;
+    urlParams.singArray = singArray;
+
+    sendServer(urlParams).then((res) => {
+        resolve(res)
+      }, (res) => {
+        reject(res)
+      }
+    );
+  })
+};
+
+/**
+ * 2.28	 会员退货
+ * @param params
+ * @returns {Promise<any>}
+ */
+const memberRefund = (params) => {
+  console.log("memberRefund", params);//debug
+  return new Promise((resolve, reject) => {
+    let urlParams = {};
+    let send = {};
+    let singArray = {};
+    urlParams.url = functions.memberRefund.url;
+
+    if(params.issuId!=null){
+      send.issuId=params.issuId;
+    }
+    if(params.acqId!=null){
+      send.acqId=params.acqId;
+    }
+    if(params.voucher !=null){
+      send.voucher =params.voucher ;
+    }
+    if(params.orgVoucher !=null){
+      send.orgVoucher =params.orgVoucher ;
+    }
+    if(params.memId!=null){
+      send.memId=params.memId;
+    }
+    if(params.refoundAmt!=null){
+      send.refoundAmt=params.refoundAmt;
+    }
+    if(params.mid!=null){
+      send.mid=params.mid;
+    }
+    if(params.mchName!=null){
+      send.mchName=params.mchName;
+    }
+    if(params.pid!=null){
+      send.pid=params.pid;
     }
     if(params.posName!=null){
       send.posName=params.posName;
@@ -183,5 +302,7 @@ export {
   loginCheck,
   memberDetailsQueryByCon,
   voucherQuery,
-  memberSale
+  memberSale,
+  memberCharge,
+  memberRefund
 }

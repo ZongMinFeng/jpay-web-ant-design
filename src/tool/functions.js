@@ -13,8 +13,16 @@ const functions = {
     url: baseUrl + '/voucherQuery'
   },
 
+  memberCharge: {
+    url: baseUrl + '/memberCharge'
+  },
+
   memberSale: {
     url: baseUrl + '/memberSale'
+  },
+
+  memberRefund: {
+    url: baseUrl + '/memberRefund'
   },
 }
 export default functions

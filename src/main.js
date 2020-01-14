@@ -16,6 +16,8 @@ import { Toast } from 'mint-ui'
 Vue.prototype.$message=Toast;
 import { InfiniteScroll } from 'mint-ui';
 Vue.use(InfiniteScroll);
+import { MessageBox } from 'mint-ui';
+Vue.prototype.$messageBox=MessageBox;
 
 //ElmentUI
 // import ElementUI from 'element-ui';
